@@ -1,4 +1,4 @@
-# inspired by https://github.com/hauptmedia/docker-jmeter  and
+# inspired by https://github.com/hauptmedia/docker-jmeter  and test
 # https://github.com/hhcordero/docker-jmeter-server/blob/master/Dockerfile
 FROM alpine:3.6
 
