@@ -1,10 +1,13 @@
 # inspired by https://github.com/hauptmedia/docker-jmeter  and
 # https://github.com/hhcordero/docker-jmeter-server/blob/master/Dockerfile
-FROM alpine:3.6
+FROM openjdk:oracle
 
 MAINTAINER Just van den Broecke<just@justobjects.nl>
 
-ARG JMETER_VERSION="3.3"
+
+#COPY . /app
+
+ARG JMETER_VERSION="5.0"
 ENV JMETER_HOME /opt/apache-jmeter-${JMETER_VERSION}
 ENV	JMETER_BIN	${JMETER_HOME}/bin
 ENV	JMETER_DOWNLOAD_URL  http://mirrors.ocf.berkeley.edu/apache/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz
@@ -13,14 +16,8 @@ ENV	JMETER_DOWNLOAD_URL  http://mirrors.ocf.berkeley.edu/apache/jmeter/binaries/
 # See https://github.com/gliderlabs/docker-alpine/issues/136#issuecomment-272703023
 # Change TimeZone TODO: TZ still is not set!
 ARG TZ="Europe/Amsterdam"
-RUN    apk update \
-	&& apk upgrade \
-	&& apk add ca-certificates \
-	&& update-ca-certificates \
-	&& apk add --update openjdk8-jre tzdata curl unzip bash \
-	&& rm -rf /var/cache/apk/* \
-	&& mkdir -p /tmp/dependencies  \
-	&& curl -L --silent ${JMETER_DOWNLOAD_URL} >  /tmp/dependencies/apache-jmeter-${JMETER_VERSION}.tgz  \
+RUN mkdir -p /tmp/dependencies  \
+	&& curl -L  ${JMETER_DOWNLOAD_URL} >  /tmp/dependencies/apache-jmeter-${JMETER_VERSION}.tgz  \
 	&& mkdir -p /opt  \
 	&& tar -xzf /tmp/dependencies/apache-jmeter-${JMETER_VERSION}.tgz -C /opt  \
 	&& rm -rf /tmp/dependencies
@@ -32,8 +29,14 @@ RUN    apk update \
 ENV PATH $PATH:$JMETER_BIN
 
 # Entrypoint has same signature as "jmeter" command
-COPY entrypoint.sh /
+#COPY entrypoint.sh /
+
+# Entrypoint has same signature as "jmeter" command
+#COPY entrypoint.sh /
+#COPY octopus.jmx /
+
+COPY . /app
 
 WORKDIR	${JMETER_HOME}
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
