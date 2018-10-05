@@ -2,7 +2,7 @@
 # https://github.com/hhcordero/docker-jmeter-server/blob/master/Dockerfile
 FROM openjdk:10-oracle
 
-MAINTAINER Just van den Broecke<just@justobjects.nl>
+MAINTAINER Hammad<hammadayaz@gmail.com>
 
 
 #COPY . /app
