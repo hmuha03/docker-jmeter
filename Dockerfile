@@ -1,6 +1,6 @@
 # inspired by https://github.com/hauptmedia/docker-jmeter  and test
 # https://github.com/hhcordero/docker-jmeter-server/blob/master/Dockerfile
-FROM openjdk:oracle
+FROM openjdk:10-jdk-slim-sid
 
 MAINTAINER Just van den Broecke<just@justobjects.nl>
 
